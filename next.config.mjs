@@ -2,7 +2,7 @@
 const nextConfig = {
   basePath: "/catalog",
   output: "export",
-  reactStrictMode: true,
+  reactStrictMode: true
 };
 
 export default nextConfig;
