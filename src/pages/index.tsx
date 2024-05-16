@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { ReactNode } from 'react'
 import { Container } from 'reactstrap'
 import Header from '../components/Header'
 import ProductsList from '../components/ProductsList'
@@ -23,7 +22,9 @@ const Products: NextPage<{ products?: ProductType[] }> = (props) => {
             Nossos Produtos
           </h1>
 
-          {<ProductsList products={props.products!} />}
+          {props.products && props.products.length > 0 && (
+            <ProductsList products={props.products} />
+          )}
         </Container>
       </main>
     </>
