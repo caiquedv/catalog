@@ -31,7 +31,7 @@ jobs:
 
       - name: Build with Next.js 🏗️
         env:
-          next_public_api_base_url: ${{ secrets.NextPublicApiBaseUrl }}
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
         run: |
           npx next build
           npx next export
