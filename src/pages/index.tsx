@@ -1,20 +1,33 @@
-import { NextPage } from "next";
-import Head from "next/head";
+import { NextPage } from 'next'
+import Head from 'next/head'
+import { ReactNode } from 'react'
+import { Container } from 'reactstrap'
+import Header from '../components/Header'
+import ProductsList from '../components/ProductsList'
+import { ProductType } from '../services/products'
 
-const Cart: NextPage = () => {
+const Products: NextPage<{ products?: ProductType[] }> = (props) => {
   return (
     <>
       <Head>
-        <title>Carrinho</title>
-        <meta name="description" content="Meu carrinho de compras" />
+        <title>Nossos Produtos</title>
+        <meta name="description" content="Conheça todos os nossos produtos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>
-        Carrinho
-      </h1>
+      <Header />
+
+      <main>
+        <Container className="mb-5">
+          <h1 className="my-5">
+            Nossos Produtos
+          </h1>
+
+          {<ProductsList products={props.products!} />}
+        </Container>
+      </main>
     </>
   )
 }
 
-export default Cart
+export default Products
