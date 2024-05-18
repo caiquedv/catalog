@@ -9,7 +9,7 @@ const PurchaseForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const whatsappMessage = `Olá, gostaria de comprar este produto.\n\nNome: ${name}\nEmail: ${email}\nMensagem: ${message}`;
-    const whatsappUrl = `https://wa.me/11985208044?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = `https://wa.me/011985208044?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, "_blank");
   };
 
