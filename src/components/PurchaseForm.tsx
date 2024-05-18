@@ -34,7 +34,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ productName, productPrice, 
         />
       </FormGroup>
       <FormGroup>
-        <Label>Mensagem para o WhatsApp</Label>
+        <Label>Mensagem</Label>
         <Input
           type="textarea"
           disabled

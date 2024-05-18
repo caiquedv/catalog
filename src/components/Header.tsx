@@ -6,7 +6,7 @@ const Header = () => {
     <Navbar container="md" color="dark" dark>
       <Link legacyBehavior href="/" passHref>
         <a className="navbar-brand">
-          Avance
+          Avance Importados
         </a>
       </Link>
     </Navbar>
