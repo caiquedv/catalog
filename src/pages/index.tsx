@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { Container } from 'reactstrap'
 import Header from '../components/Header'
 import ProductsList from '../components/ProductsList'
-import productsData from '../data/products.json'
+import productsData from '../../database.json'
 
 export interface ProductType {
   id: number;
@@ -16,7 +16,6 @@ export interface ProductType {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  // Carrega os produtos diretamente do JSON
   const products: ProductType[] = productsData;
   return { props: { products } }
 }
