@@ -1,9 +1,10 @@
-import { GetStaticProps, NextPage } from 'next'
-import Head from 'next/head'
-import { ReactNode } from 'react'
-import { Container } from 'reactstrap'
-import ProductsList from '../components/ProductsList'
-import productsData from '../../database.json'
+import { GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
+import { Container } from 'reactstrap';
+import ProductsList from '../components/ProductsList';
+import productsData from '../../database.json';
 
 export interface ProductType {
   id: number;
@@ -11,18 +12,23 @@ export interface ProductType {
   description: string;
   price: number;
   imageUrl: string;
-  inStock: number;
+  category: string;
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const products: ProductType[] = productsData;
-  return { props: { products } }
+  return { props: { products } };
 }
 
 const Products: NextPage = (props: {
-  children?: ReactNode
-  products?: ProductType[]
+  children?: ReactNode;
+  products?: ProductType[];
 }) => {
+  const router = useRouter();
+  const { page, category } = router.query;
+  const currentPage = page ? parseInt(page as string) : 1;
+  const initialCategory = category ? (category as string) : null;
+
   return (
     <>
       <Head>
@@ -37,11 +43,11 @@ const Products: NextPage = (props: {
             Nossos Produtos
           </h1>
 
-          {<ProductsList products={props.products!} />}
+          {<ProductsList products={props.products!} currentPage={currentPage} initialCategory={initialCategory} />}
         </Container>
       </main>
     </>
-  )
+  );
 }
 
-export default Products
+export default Products;

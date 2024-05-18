@@ -4,11 +4,13 @@ import { ProductType } from '../services/products';
 
 type ProductCardProps = {
   product: ProductType;
+  currentPage: number;
+  selectedCategory: string | null;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, currentPage, selectedCategory }) => {
   return (
-    <Link href={`/product/${product.id}`} passHref>
+    <Link href={`/product/${product.id}?page=${currentPage}&category=${selectedCategory !== null ? selectedCategory : ''}`} passHref>
       <Card>
         <CardBody>
           <h5 className="card-title">{product.name}</h5>
