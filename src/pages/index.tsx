@@ -4,10 +4,19 @@ import { ReactNode } from 'react'
 import { Container } from 'reactstrap'
 import Header from '../components/Header'
 import ProductsList from '../components/ProductsList'
-import { fetchProducts, ProductType } from '../services/products'
+import productsData from '../database.json'
+
+export interface ProductType {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+  inStock: number;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = await fetchProducts()
+  const products: ProductType[] = productsData;
   return { props: { products } }
 }
 

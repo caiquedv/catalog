@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React, { useState } from "react"
 import { Button, Card, CardBody, CardSubtitle } from "reactstrap"
-import { ProductType } from "../services/products"
+import { ProductType } from "../pages/index"
 import SuccessToast from "./SuccessToast"
 
 type ProductCardProps = {
@@ -16,14 +16,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Card>
       <Link legacyBehavior href={`/products/${id}`}>
-        <Image className="card-img-top" src={imageUrl} alt="Product" height={500} width={600} />
+        <a>
+          <Image className="card-img-top" src={imageUrl} alt="Product" height={500} width={600} />
+        </a>
       </Link>
 
       <CardBody>
         <Link legacyBehavior href={`/products/${id}`}>
-          <h5 className="card-title" style={{ cursor: 'pointer' }}>
-            {name}
-          </h5>
+          <a>
+            <h5 className="card-title" style={{ cursor: 'pointer' }}>
+              {name}
+            </h5>
+          </a>
         </Link>
 
         <CardSubtitle className="mb-3 text-muted" tag="h6">
@@ -45,7 +49,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </CardBody>
       <SuccessToast toastIsOpen={toastIsOpen} setToastIsOpen={setToastIsOpen} />
     </Card>
-
   )
 }
 
