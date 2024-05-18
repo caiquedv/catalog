@@ -34,18 +34,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           R$ {price}
         </CardSubtitle>
 
-        <Button
-          color="dark"
-          className="pb-2"
-          block
-          onClick={() => {
-            setToastIsOpen(true)
-            setTimeout(() => setToastIsOpen(false), 1000 * 3)
-          }}
-        >
-          Adicionar ao Carrinho
-        </Button>
-
+        <Link legacyBehavior href="/purchase">
+          <Button color="dark" className="pb-2" block>
+            Comprar
+          </Button>
+        </Link>
       </CardBody>
       <SuccessToast toastIsOpen={toastIsOpen} setToastIsOpen={setToastIsOpen} />
     </Card>
