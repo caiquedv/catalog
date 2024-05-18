@@ -1,48 +1,45 @@
-import Image from "next/image"
-import Link from "next/link"
-import React, { useState } from "react"
-import { Button, Card, CardBody, CardSubtitle } from "reactstrap"
-import { ProductType } from "../pages/index"
-import SuccessToast from "./SuccessToast"
+import { useRouter } from 'next/router';
+import { Button, Card, CardBody, CardSubtitle } from 'reactstrap';
+import { ProductType } from '../services/products';
 
 type ProductCardProps = {
-  product: ProductType
-}
+  product: ProductType;
+};
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [toastIsOpen, setToastIsOpen] = useState(false)
-  const { id, name, imageUrl, price } = product
+  // Initializing the router
+  const router = useRouter();
 
+  // Function to handle the buy button click event
+  const handleBuyButtonClick = () => {
+    // Navigating to the purchase page with query parameters
+    router.push({
+      pathname: '/purchase',
+      query: {
+        productName: product.name,
+        productPrice: product.price.toString(),
+      },
+    });
+  };
+
+  // Rendering the product card component
   return (
     <Card>
-      <Link legacyBehavior href={`/products/${id}`}>
-        <a>
-          <Image className="card-img-top" src={imageUrl} alt="Product" height={500} width={600} />
-        </a>
-      </Link>
-
+      {/* Rendering card content */}
       <CardBody>
-        <Link legacyBehavior href={`/products/${id}`}>
-          <a>
-            <h5 className="card-title" style={{ cursor: 'pointer' }}>
-              {name}
-            </h5>
-          </a>
-        </Link>
-
-        <CardSubtitle className="mb-3 text-muted" tag="h6">
-          R$ {price}
-        </CardSubtitle>
-
-        <Link legacyBehavior href="/purchase">
-          <Button color="dark" className="pb-2" block>
-            Comprar
-          </Button>
-        </Link>
+        {/* Rendering product name */}
+        <h5 className="card-title">{product.name}</h5>
+        {/* Rendering product image */}
+        <img src={product.imageUrl} alt={product.name} className="card-img-top" />
+        {/* Rendering product price */}
+        <CardSubtitle className="mb-3 text-muted">R$ {product.price}</CardSubtitle>
+        {/* Rendering buy button */}
+        <Button color="dark" className="pb-2" block onClick={handleBuyButtonClick}>
+          Comprar
+        </Button>
       </CardBody>
-      <SuccessToast toastIsOpen={toastIsOpen} setToastIsOpen={setToastIsOpen} />
     </Card>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

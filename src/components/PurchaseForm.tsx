@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import React, { useState } from 'react';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const PurchaseForm: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+type PurchaseFormProps = {
+  productName: string;
+  productPrice: number;
+};
+
+const PurchaseForm: React.FC<PurchaseFormProps> = ({ productName, productPrice }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const whatsappMessage = `Olá, gostaria de comprar este produto.\n\nNome: ${name}\nEmail: ${email}\nMensagem: ${message}`;
+    const whatsappMessage = `Olá, gostaria de comprar o produto ${productName} por R$ ${productPrice.toFixed(
+      2
+    )}.\n\nNome: ${name}\nEmail: ${email}\nMensagem: ${message}`;
     const whatsappUrl = `https://wa.me/5511985208044?text=${encodeURIComponent(whatsappMessage)}`;
-    window.open(whatsappUrl, "_blank");
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
