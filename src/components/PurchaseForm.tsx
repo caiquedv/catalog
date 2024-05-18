@@ -16,7 +16,7 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ productName, productPrice }
     const whatsappMessage = `Olá, gostaria de comprar o produto ${productName} por R$ ${productPrice.toFixed(
       2
     )}.\n\nNome: ${name}\nEmail: ${email}\nMensagem: ${message}`;
-    const whatsappUrl = `https://wa.me/5566997252690?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = `https://wa.me/5511985208044?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, '_blank');
   };
 

@@ -2,7 +2,6 @@ import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { Container } from 'reactstrap'
-import Header from '../components/Header'
 import ProductsList from '../components/ProductsList'
 import productsData from '../../database.json'
 
@@ -31,8 +30,6 @@ const Products: NextPage = (props: {
         <meta name="description" content="Conheça todos os nossos produtos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Header />
 
       <main>
         <Container className="mb-5">
