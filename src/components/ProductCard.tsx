@@ -10,6 +10,7 @@ type ProductCardProps = {
   product: ProductType;
   currentPage: number;
   selectedCategory: string | null;
+  isLoggedIn: boolean;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, currentPage, selectedCategory }) => {
