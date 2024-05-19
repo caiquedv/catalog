@@ -1,18 +1,20 @@
+// components/ProductCard.tsx
 import React from 'react';
 import Link from 'next/link';
 import { Card, CardBody, CardImg, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { ProductType } from '../types';
+import { useAuth } from '../contexts/AuthContext';
 
 type ProductCardProps = {
   product: ProductType;
   currentPage: number;
   selectedCategory: string | null;
-  isLoggedIn: boolean;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, currentPage, selectedCategory, isLoggedIn }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, currentPage, selectedCategory }) => {
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
 
   const handleEditClick = () => {
     router.push(`/productForm?id=${product.id}&page=${currentPage}&category=${selectedCategory || ''}`);

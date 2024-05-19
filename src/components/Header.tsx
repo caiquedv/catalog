@@ -1,31 +1,27 @@
+// components/Header.tsx
 import Link from 'next/link';
 import { Navbar, Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
   const router = useRouter();
   const { id, page, category } = router.query;
   const isRoot = router.pathname === '/';
   const [productName, setProductName] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedIn);
-  }, []);
+  const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const storedProductName = localStorage.getItem('productName');
     if (storedProductName) {
       setProductName(storedProductName);
     }
-  }, [router.asPath]); // Atualize o nome do produto quando a rota mudar
+  }, [router.asPath]);
 
   const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
-    window.location.reload();
+    logout();
+    router.push('/');
   };
 
   const handleBackButtonClick = () => {
@@ -45,7 +41,7 @@ const Header = () => {
 
   const handleNewClick = () => {
     localStorage.removeItem('productName');
-    setProductName(''); // Limpar o nome do produto do estado
+    setProductName('');
   };
 
   return (
