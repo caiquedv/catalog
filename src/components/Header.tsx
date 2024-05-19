@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Nav, Navbar } from "reactstrap";
+import { Navbar } from "reactstrap";
 
 const Header = () => {
   return (

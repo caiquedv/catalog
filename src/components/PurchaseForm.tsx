@@ -9,16 +9,17 @@ type PurchaseFormProps = {
 
 const PurchaseForm: React.FC<PurchaseFormProps> = ({ productName, productPrice, productLink }) => {
   const [name, setName] = useState('');
-  const [observations, setObservations] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const whatsappMessage = `Olá, gostaria de comprar o produto ${productName} por R$ ${productPrice.toFixed(
+    const whatsappMessage = `Olá, meu nome é ${name} e gostaria de comprar o produto ${productName} no valor de R$ ${productPrice.toFixed(
       2
-    )} que ví no link: ${productLink}\n\nNome: ${name}\nObservações: ${observations}`;
+    )}\nLink: ${productLink}`;
     const whatsappUrl = `https://wa.me/5511985208044?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  const displayMessage = `Olá, meu nome é ${name || '_____'} e gostaria de comprar o produto ${productName} no valor de R$ ${productPrice.toFixed(2)}.`;
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -38,22 +39,12 @@ const PurchaseForm: React.FC<PurchaseFormProps> = ({ productName, productPrice, 
         <Input
           type="textarea"
           disabled
-          value={`Olá, gostaria de comprar o produto ${productName} por R$ ${productPrice.toFixed(2)} que ví no link: ${productLink}`}
+          value={displayMessage}
           readOnly
         />
       </FormGroup>
-      <FormGroup>
-        <Input
-          type="textarea"
-          name="observations"
-          id="observations"
-          value={observations}
-          onChange={(e) => setObservations(e.target.value)}
-          placeholder="Escreva sua dúvida ou observação..."
-        />
-      </FormGroup>
       <Button type="submit" color="primary">
-        Enviar
+        Enviar pelo WhatsApp
       </Button>
     </Form>
   );

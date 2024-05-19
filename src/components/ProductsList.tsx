@@ -51,27 +51,34 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
 
   return (
     <>
-      <Input
-        type="text"
-        placeholder="Buscar produto por nome"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="mb-3"
-      />
+      <Row>
+        <Col md={6} lg={4} xl={6} >
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="mb-3">
+            <DropdownToggle caret>
+              {selectedCategory ? `${selectedCategory}` : 'Todas os produtos'}
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleCategoryChange(null)}>Todas os produtos</DropdownItem>
+              {categories.map(category => (
+                <DropdownItem key={category} onClick={() => handleCategoryChange(category)}>
+                  {category}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
 
-      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="mb-3">
-        <DropdownToggle caret>
-          {selectedCategory ? `${selectedCategory}` : 'Todas os produtos'}
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={() => handleCategoryChange(null)}>Todas os produtos</DropdownItem>
-          {categories.map(category => (
-            <DropdownItem key={category} onClick={() => handleCategoryChange(category)}>
-              {category}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
+          </Dropdown>
+        </Col>
+
+        <Col md={6} lg={4} xl={6} className="mb-3">
+          <Input
+            type="text"
+            placeholder="Buscar produto por nome"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="mb-3"
+          />
+        </Col>
+      </Row>
 
       <Row className="g-5">
         {paginatedProducts.map(product => (
@@ -81,7 +88,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
         ))}
       </Row>
 
-      <Pagination className="mt-3">
+      <Pagination className="mt-5 d-flex justify-content-center">
         <PaginationItem disabled={currentPage === 1}>
           <PaginationLink first onClick={() => handlePageChange(1)} />
         </PaginationItem>
