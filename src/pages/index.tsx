@@ -4,10 +4,11 @@ import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import { Container } from 'reactstrap';
 import ProductsList from '../components/ProductsList';
-import productsData from '../../database.json';
+import { db } from '../services/firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 export interface ProductType {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -16,7 +17,20 @@ export interface ProductType {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products: ProductType[] = productsData;
+  const products: ProductType[] = [];
+  
+  try {
+    const querySnapshot = await getDocs(collection(db, 'products'));
+    querySnapshot.forEach((doc) => {
+      products.push({
+        id: doc.id,
+        ...doc.data(),
+      } as ProductType);
+    });
+  } catch (error) {
+    console.error("Error fetching products from Firebase:", error);
+  }
+
   return { props: { products } };
 }
 
@@ -37,13 +51,9 @@ const Products: NextPage = (props: {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-        <Container className="mb-5">
-          {/* <h1 className="my-5">
-            Nossos Produtos
-          </h1> */}
-
-          {<ProductsList products={props.products!} currentPage={currentPage} initialCategory={initialCategory} />}
-        </Container>
+      <Container className="mb-5">
+        <ProductsList products={props.products!} currentPage={currentPage} initialCategory={initialCategory} />
+      </Container>
     </>
   );
 }
