@@ -9,12 +9,13 @@ type ProductType = {
   description: string;
   imageUrl: string;
   category: string;
+  price: number;
 };
 
 const ProductForm = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [product, setProduct] = useState<ProductType>({ name: '', description: '', imageUrl: '', category: '' });
+  const [product, setProduct] = useState<ProductType>({ name: '', description: '', imageUrl: '', category: '', price: 0 });
   const isEdit = Boolean(id);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const ProductForm = () => {
         }
       } else {
         // Reset form when not editing
-        setProduct({ name: '', description: '', imageUrl: '', category: '' });
+        setProduct({ name: '', description: '', imageUrl: '', category: '', price: 0 });
       }
     };
     fetchProduct();
@@ -42,7 +43,10 @@ const ProductForm = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: name === 'price' ? parseFloat(value) : value // Converte 'price' para número
+    }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -52,8 +56,7 @@ const ProductForm = () => {
         const docRef = doc(db, 'products', String(id));
         await updateDoc(docRef, product);
       } else {
-        const newProduct = { ...product };
-        await addDoc(collection(db, 'products'), newProduct);
+        await addDoc(collection(db, 'products'), product);
       }
       router.push('/');
     } catch (error) {
@@ -80,6 +83,10 @@ const ProductForm = () => {
         <FormGroup>
           <Label for="category">Categoria</Label>
           <Input type="text" name="category" id="category" value={product.category} onChange={handleChange} required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="price">Preço</Label>
+          <Input type="number" name="price" id="price" value={product.price} onChange={handleChange} required />
         </FormGroup>
         <Button type="submit" color="primary">{isEdit ? 'Atualizar' : 'Cadastrar'}</Button>
       </Form>

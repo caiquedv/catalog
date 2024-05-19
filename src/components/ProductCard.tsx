@@ -15,13 +15,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, currentPage, selecte
   const router = useRouter();
 
   const handleEditClick = () => {
-    router.push(`/productForm?id=${product.id}`);
+    router.push(`/productForm?id=${product.id}&page=${currentPage}&category=${selectedCategory || ''}`);
+  };
+
+  const handleViewDetailsClick = () => {
+    localStorage.setItem('productName', product.name);
   };
 
   return (
     <Card className="h-100">
       <Link legacyBehavior href={`/product/${product.id}?page=${currentPage}&category=${selectedCategory !== null ? selectedCategory : ''}`} passHref>
-        <a className="text-decoration-none text-dark">
+        <a className="text-decoration-none text-dark" onClick={handleViewDetailsClick}>
           <CardImg top width="100%" src={product.imageUrl} alt={product.name} />
           <CardBody>
             <CardTitle tag="h5">{product.name}</CardTitle>

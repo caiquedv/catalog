@@ -2,19 +2,25 @@ import Link from 'next/link';
 import { Navbar, Button } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import products from '../../database.json';
 
 const Header = () => {
   const router = useRouter();
   const { id, page, category } = router.query;
   const isRoot = router.pathname === '/';
-  const product = products.find((p) => p.id === Number(id));
+  const [productName, setProductName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedIn);
   }, []);
+
+  useEffect(() => {
+    const storedProductName = localStorage.getItem('productName');
+    if (storedProductName) {
+      setProductName(storedProductName);
+    }
+  }, [router.asPath]); // Atualize o nome do produto quando a rota mudar
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -24,7 +30,16 @@ const Header = () => {
 
   const handleBackButtonClick = () => {
     if (!isRoot) {
-      router.push(`/?page=${page || ''}&category=${category || ''}`);
+      let backUrl = '/';
+      if (page) {
+        backUrl += `?page=${page}`;
+        if (category) {
+          backUrl += `&category=${category}`;
+        }
+      } else if (category) {
+        backUrl += `?category=${category}`;
+      }
+      router.push(backUrl);
     }
   };
 
@@ -37,7 +52,7 @@ const Header = () => {
           </Button>
         )}
         <span className="navbar-brand">
-          {isRoot ? 'Avance Importados' : product ? `${product.name}` : ''}
+          {isRoot ? 'Avance Importados' : productName}
         </span>
       </div>
       {isLoggedIn && (
