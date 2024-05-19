@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Card, CardBody, CardImg, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { useRouter } from 'next/router';
-import { ProductType } from '../services/products';
+import { ProductType } from '../types';
 
 type ProductCardProps = {
   product: ProductType;

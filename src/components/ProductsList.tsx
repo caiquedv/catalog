@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Pagination, PaginationItem, PaginationLink, Input, Button } from 'reactstrap';
-import { ProductType } from '../pages/index';
+import { ProductType } from '../types';
 import ProductCard from './ProductCard';
 
 type ProductListProps = {

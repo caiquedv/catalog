@@ -43,6 +43,11 @@ const Header = () => {
     }
   };
 
+  const handleNewClick = () => {
+    localStorage.removeItem('productName');
+    setProductName(''); // Limpar o nome do produto do estado
+  };
+
   return (
     <Navbar container="md" className={`${!isRoot ? 'position-fixed' : 'mb-3'} w-100`} color="dark" dark>
       <div>
@@ -58,7 +63,7 @@ const Header = () => {
       {isLoggedIn && (
         <div>
           <Link href="/productForm">
-            <Button color="primary" className="me-2">Novo</Button>
+            <Button color="primary" className="me-2" onClick={handleNewClick}>Novo</Button>
           </Link>
           {router.pathname === '/' && (
             <Button color="danger" onClick={handleLogout}>Sair</Button>

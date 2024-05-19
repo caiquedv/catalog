@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import { db } from '../services/firebaseConfig'; // Importe a instância do Firestore
 import PurchaseForm from '../components/PurchaseForm';
 import { doc, getDoc } from 'firebase/firestore';
-import { ProductType } from '@/pages';
+import { ProductType } from '../types';
 
 const ProductDetailPage: React.FC = () => {
   const router = useRouter();
@@ -15,14 +15,16 @@ const ProductDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const docRef = await getDoc(doc(db, 'products', id)); // Obtém o documento do produto com o ID correspondente
-        if (docRef.exists()) {
-          setProduct({
-            id: docRef.id,
-            ...docRef.data()
-          } as ProductType);
-        } else {
-          console.log('Produto não encontrado');
+        if (typeof id === 'string') {
+          const docRef = await getDoc(doc(db, 'products', id)); // Obtém o documento do produto com o ID correspondente
+          if (docRef.exists()) {
+            setProduct({
+              id: docRef.id,
+              ...docRef.data()
+            } as ProductType);
+          } else {
+            console.log('Produto não encontrado');
+          }
         }
       } catch (error) {
         console.error('Erro ao buscar produto do Firebase:', error);

@@ -6,15 +6,7 @@ import { Container } from 'reactstrap';
 import ProductsList from '../components/ProductsList';
 import { db } from '../services/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
-
-export interface ProductType {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  category: string;
-}
+import { ProductType } from '../types';
 
 export const getStaticProps: GetStaticProps = async () => {
   const products: ProductType[] = [];
