@@ -52,7 +52,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
   return (
     <>
       <Row>
-        <Col md={6} lg={4} xl={6} >
+        <Col md={6} lg={8} xl={6} >
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="mb-3">
             <DropdownToggle caret>
               {selectedCategory ? `${selectedCategory}` : 'Todas os produtos'}
@@ -69,7 +69,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
           </Dropdown>
         </Col>
 
-        <Col md={6} lg={4} xl={6} className="mb-3">
+        <Col md={6} lg={8} xl={6} className="mb-3">
           <Input
             type="text"
             placeholder="Buscar produto por nome"

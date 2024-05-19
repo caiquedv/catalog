@@ -37,15 +37,13 @@ const Products: NextPage = (props: {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
         <Container className="mb-5">
-          <h1 className="my-5">
+          {/* <h1 className="my-5">
             Nossos Produtos
-          </h1>
+          </h1> */}
 
           {<ProductsList products={props.products!} currentPage={currentPage} initialCategory={initialCategory} />}
         </Container>
-      </main>
     </>
   );
 }
