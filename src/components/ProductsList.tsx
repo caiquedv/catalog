@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Pagination, PaginationItem, PaginationLink, Input } from "reactstrap";
-import { ProductType } from "../pages/index";
-import ProductCard from "./ProductCard";
+import React, { useState, useEffect } from 'react';
+import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Pagination, PaginationItem, PaginationLink, Input, Button } from 'reactstrap';
+import { ProductType } from '../pages/index';
+import ProductCard from './ProductCard';
 
 type ProductListProps = {
   products: ProductType[];
@@ -13,12 +13,18 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const itemsPerPage = 8;
 
   useEffect(() => {
     setCurrentPage(initialPage);
   }, [initialPage]);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
+  }, []);
 
   const categories = [...new Set(products.map(product => product.category))];
 
@@ -52,7 +58,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
   return (
     <>
       <Row>
-        <Col md={6} lg={8} xl={6} >
+        <Col md={6} lg={8} xl={6}>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} className="mb-3">
             <DropdownToggle caret>
               {selectedCategory ? `${selectedCategory}` : 'Todas os produtos'}
@@ -65,7 +71,6 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
                 </DropdownItem>
               ))}
             </DropdownMenu>
-
           </Dropdown>
         </Col>
 
@@ -76,6 +81,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
             value={searchTerm}
             onChange={handleSearchChange}
             className="mb-3"
+            style={{ width: 'auto' }}
           />
         </Col>
       </Row>
@@ -83,7 +89,7 @@ const ProductsList: React.FC<ProductListProps> = ({ products, currentPage: initi
       <Row className="g-5">
         {paginatedProducts.map(product => (
           <Col md={6} lg={4} xl={3} key={product.id}>
-            <ProductCard product={product} currentPage={currentPage} selectedCategory={selectedCategory} />
+            <ProductCard product={product} currentPage={currentPage} selectedCategory={selectedCategory} isLoggedIn={isLoggedIn} />
           </Col>
         ))}
       </Row>
