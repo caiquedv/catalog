@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       localStorage.setItem('isLoggedIn', 'true');
-      router.push('/');
+      window.history.back();
     } else {
       alert('Invalid credentials');
     }

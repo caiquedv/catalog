@@ -32,6 +32,9 @@ const ProductForm = () => {
         } catch (error) {
           console.error('Error fetching document:', error);
         }
+      } else {
+        // Reset form when not editing
+        setProduct({ name: '', description: '', imageUrl: '', category: '' });
       }
     };
     fetchProduct();
@@ -60,7 +63,6 @@ const ProductForm = () => {
 
   return (
     <Container className="mt-5">
-      <Button onClick={() => router.back()}>Voltar</Button>
       <h1>{isEdit ? 'Editar Produto' : 'Cadastrar Produto'}</h1>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
