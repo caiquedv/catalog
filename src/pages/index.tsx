@@ -23,10 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
     console.error("Error fetching products from Firebase:", error);
   }
 
-  return {
-    props: { products },
-    revalidate: 10, // Revalida a cada 10 segundos
-  };
+  return { props: { products } };
 }
 
 const Products: NextPage = (props: {
