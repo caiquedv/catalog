@@ -1,4 +1,4 @@
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
@@ -8,7 +8,7 @@ import { db } from '../services/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import { ProductType } from '../types';
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const products: ProductType[] = [];
   
   try {
