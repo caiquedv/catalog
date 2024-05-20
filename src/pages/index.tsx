@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
@@ -8,7 +8,7 @@ import { db } from '../services/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import { ProductType } from '../types';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const products: ProductType[] = [];
   
   try {
@@ -23,7 +23,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
     console.error("Error fetching products from Firebase:", error);
   }
 
-  return { props: { products } };
+  return {
+    props: { products },
+    revalidate: 10, // Revalida a cada 10 segundos
+  };
 }
 
 const Products: NextPage = (props: {
