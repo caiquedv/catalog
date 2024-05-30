@@ -61,9 +61,7 @@ const Header = () => {
           <Link href="/productForm">
             <Button color="primary" className="me-2" onClick={handleNewClick}>Novo</Button>
           </Link>
-          {router.pathname === '/' && (
             <Button color="danger" onClick={handleLogout}>Sair</Button>
-          )}
         </div>
       )}
     </Navbar>

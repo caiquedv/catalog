@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { db } from '../services/firebaseConfig';
 import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { useAuth } from '@/contexts/AuthContext';
 
 type ProductType = {
   name: string;
@@ -17,29 +18,34 @@ const ProductForm = () => {
   const { id } = router.query;
   const [product, setProduct] = useState<ProductType>({ name: '', description: '', imageUrl: '', category: '', price: 0 });
   const isEdit = Boolean(id);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (isEdit) {
-        try {
-          const docRef = doc(db, 'products', String(id));
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const productData = docSnap.data() as ProductType;
-            setProduct(productData);
-          } else {
-            console.error('No such document!');
+    if (!isLoggedIn) {
+      router.push('/');
+    } else {
+      const fetchProduct = async () => {
+        if (isEdit) {
+          try {
+            const docRef = doc(db, 'products', String(id));
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+              const productData = docSnap.data() as ProductType;
+              setProduct(productData);
+            } else {
+              console.error('No such document!');
+            }
+          } catch (error) {
+            console.error('Error fetching document:', error);
           }
-        } catch (error) {
-          console.error('Error fetching document:', error);
+        } else {
+          // Reset form when not editing
+          setProduct({ name: '', description: '', imageUrl: '', category: '', price: 0 });
         }
-      } else {
-        // Reset form when not editing
-        setProduct({ name: '', description: '', imageUrl: '', category: '', price: 0 });
-      }
-    };
-    fetchProduct();
-  }, [id, isEdit]);
+      }; 
+      fetchProduct();
+    }
+  }, [isLoggedIn, id, isEdit]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
